@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IT-Support — Schnelle Hilfe</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="#">IT Support (Frontend)</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navmenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#how">Wie es funktioniert</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div class="row g-4">
+      <!-- Linke Spalte: Formular -->
+      <div class="col-lg-7">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h1 class="h4 mb-3">Beschreibe dein Problem</h1>
+            <p class="text-muted small">
+              Gib so viele Details wie möglich: Betriebssystem, Fehlermeldungen, Schritte die du schon versucht hast, Zeitstempel, usw.
+            </p>
+
+            <form method="post" id="supportForm" autocomplete="off">
+              <div class="mb-3">
+                <label for="title" class="form-label">Kurztitel</label>
+                <input id="title" name="title" class="form-control" placeholder="z.B. Drucker verbindet nicht" maxlength="120">
+              </div>
+
+              <div class="mb-3">
+                <label for="problem" class="form-label">Problem-Beschreibung</label>
+                <textarea id="problem" name="problem" rows="7" class="form-control" placeholder="Schreibe hier das Problem..."></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="severity" class="form-label">Dringlichkeit</label>
+                <select id="severity" name="severity" class="form-select">
+                  <option value="low">Niedrig</option>
+                  <option value="medium" selected>Mittel</option>
+                  <option value="high">Hoch (Produktivsystem)</option>
+                </select>
+              </div>
+
+              <button class="btn btn-danger" type="submit">Los</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rechte Spalte: KI Lösung -->
+      <div class="col-lg-5">
+        {% if res %}
+        <div class="card shadow-sm border-success h-100">
+          <div class="card-header bg-success text-white">
+            KI-Lösungsvorschläge
+          </div>
+          <div class="card-body">
+            <pre class="mb-0" style="white-space: pre-wrap;">{{ res }}</pre>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </main>
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
