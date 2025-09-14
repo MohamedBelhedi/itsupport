@@ -28,43 +28,43 @@
   </nav>
 
   <main class="container py-5">
-    <div class="row g-4">
-      <!-- Linke Spalte: Formular -->
-      <div class="col-lg-7">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h1 class="h4 mb-3">Beschreibe dein Problem</h1>
-            <p class="text-muted small">
-              Gib so viele Details wie möglich: Betriebssystem, Fehlermeldungen, Schritte die du schon versucht hast, Zeitstempel, usw.
-            </p>
+  <div class="row g-4">
+    <!-- Linke Spalte: Formular -->
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="h4 mb-3">Beschreibe dein Problem</h1>
+          <p class="text-muted small">
+            Gib so viele Details wie möglich: Betriebssystem, Fehlermeldungen, Schritte die du schon versucht hast, Zeitstempel, usw.
+          </p>
 
-            <form method="post" id="supportForm" autocomplete="off">
-              <div class="mb-3">
-                <label for="title" class="form-label">Kurztitel</label>
-                <input id="title" name="title" class="form-control" placeholder="z.B. Drucker verbindet nicht" maxlength="120">
-              </div>
+          <form method="post" id="supportForm" autocomplete="off">
+            <div class="mb-3">
+              <label for="title" class="form-label">Kurztitel</label>
+              <input id="title" name="title" class="form-control" placeholder="z.B. Drucker verbindet nicht" maxlength="120">
+            </div>
 
-              <div class="mb-3">
-                <label for="problem" class="form-label">Problem-Beschreibung</label>
-                <textarea id="problem" name="problem" rows="7" class="form-control" placeholder="Schreibe hier das Problem..."></textarea>
-              </div>
+            <div class="mb-3">
+              <label for="problem" class="form-label">Problem-Beschreibung</label>
+              <textarea id="problem" name="problem" rows="7" class="form-control" placeholder="Schreibe hier das Problem..."></textarea>
+            </div>
 
-              <div class="mb-3">
-                <label for="severity" class="form-label">Dringlichkeit</label>
-                <select id="severity" name="severity" class="form-select">
-                  <option value="low">Niedrig</option>
-                  <option value="medium" selected>Mittel</option>
-                  <option value="high">Hoch (Produktivsystem)</option>
-                </select>
-              </div>
+            <div class="mb-3">
+              <label for="severity" class="form-label">Dringlichkeit</label>
+              <select id="severity" name="severity" class="form-select">
+                <option value="low">Niedrig</option>
+                <option value="medium" selected>Mittel</option>
+                <option value="high">Hoch (Produktivsystem)</option>
+              </select>
+            </div>
 
-              <button class="btn btn-danger" type="submit">Los</button>
-            </form>
-          </div>
+            <button class="btn btn-danger" type="submit" id="submitBtn">Los</button>
+          </form>
         </div>
       </div>
+    </div>
 
-      <!-- Rechte Spalte: KI Lösung -->
+    <!-- Rechte Spalte: KI Lösung -->
       <div class="col-lg-5">
         {% if res %}
         <div class="card shadow-sm border-success h-100">
@@ -78,10 +78,44 @@
         {% endif %}
       </div>
     </div>
+
+    <!-- Spinner Overlay (initially hidden) -->
+    <div id="spinnerOverlay" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.75); z-index:1050; align-items:center; justify-content:center;">
+      <div class="text-center">
+        <div class="spinner-border" role="status" aria-hidden="true" style="width:3rem;height:3rem;"></div>
+        <div class="mt-2">KI wird ausgeführt — bitte warten...</div>
+      </div>
+    </div>
   </main>
+
+<!-- Script: Spinner anzeigen beim Abschicken, beim Laden ausblenden -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('supportForm');
+      const overlay = document.getElementById('spinnerOverlay');
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Wenn die Seite geladen ist (auch nach POST), Spinner verstecken
+      if (overlay) overlay.style.display = 'none';
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          // Overlay anzeigen
+          if (overlay) overlay.style.display = 'flex';
+          // Button deaktivieren um Doppel-Submits zu verhindern
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Wird ausgeführt…';
+          }
+          // Default-Submit passiert (kein e.preventDefault()), Seite lädt neu und Spinner bleibt sichtbar bis Response eintrifft.
+        });
+      }
+    });
+  </script>
+
 
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
