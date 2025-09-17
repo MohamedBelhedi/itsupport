@@ -21,6 +21,9 @@ def callIndex():
         Dringlichkeit: {severity}
 
         Bitte liefere konkrete, priorisierte Lösungsschritte.
+        Und Bitte liefere nur antworten die mit Problemen zu tun haben,
+        sollte der User andere Anfragen stellen die nicht mit dem Kontext zu tun haben, 
+        dann antworte ihn nicht
         """
 
         response = client.models.generate_content(
@@ -30,6 +33,8 @@ def callIndex():
 
         res = response.text
         print(res)
+
+        #hier kommt das Bilderverständnis API
 
     return render_template("index.html", res=res)
 

@@ -48,7 +48,10 @@
               <label for="problem" class="form-label">Problem-Beschreibung</label>
               <textarea id="problem" name="problem" rows="7" class="form-control" placeholder="Schreibe hier das Problem..."></textarea>
             </div>
-
+            <div class="mb-3">
+              <label for="foto" class="form-label">Fotos</label>
+              <input type="file" name="foto" id="foto" />
+            </div>
             <div class="mb-3">
               <label for="severity" class="form-label">Dringlichkeit</label>
               <select id="severity" name="severity" class="form-select">
@@ -89,29 +92,7 @@
   </main>
 
 <!-- Script: Spinner anzeigen beim Abschicken, beim Laden ausblenden -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const form = document.getElementById('supportForm');
-      const overlay = document.getElementById('spinnerOverlay');
-      const submitBtn = document.getElementById('submitBtn');
-
-      // Wenn die Seite geladen ist (auch nach POST), Spinner verstecken
-      if (overlay) overlay.style.display = 'none';
-
-      if (form) {
-        form.addEventListener('submit', function (e) {
-          // Overlay anzeigen
-          if (overlay) overlay.style.display = 'flex';
-          // Button deaktivieren um Doppel-Submits zu verhindern
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerText = 'Wird ausgeführt…';
-          }
-          // Default-Submit passiert (kein e.preventDefault()), Seite lädt neu und Spinner bleibt sichtbar bis Response eintrifft.
-        });
-      }
-    });
-  </script>
+  <script src="{{url_for('static', filename='js/main.js')}}"></script>
 
 
 
