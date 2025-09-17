@@ -1,4 +1,66 @@
+# from flask import Flask, render_template, request
+# from google import genai
+# from google.genai import Client
+# from google.generativeai import types
+#
+# client = Client(api_key="AIzaSyCLZKEwkBAgDc6XJ2t66xYqa1pQsaadYOE")
+# app = Flask(__name__)
+#
+# @app.route("/", methods=["POST", "GET"])
+#
+# def callIndex():
+#     res = ""
+#     if request.method == "POST":
+#         title = request.form.get("title", "").strip()
+#         problem = request.form.get("problem", "").strip()
+#         severity = request.form.get("severity", "").strip()
+#
+#         foto_file = request.files.get("foto")
+#         foto_bytes = None
+#         mime_type = None
+#         if foto_file and foto_file.filename != "":
+#             foto_bytes = foto_file.read()  # liest komplette Datei als bytes
+#             # Ermittele MIME-Typ, z. B. über filename oder werkzeug
+#             mime_type = foto_file.mimetype or "application/octet-stream"
+#
+#         # Prompt Text vorbereiten
+#         content_text = f"""
+#         IT-Support-Anfrage:
+#         Titel: {title if title else "Kein Titel angegeben"}
+#         Problem: {problem}
+#         Dringlichkeit: {severity}
+#
+#         Bitte liefere konkrete, priorisierte Lösungsschritte.
+#         Und bitte liefere nur Antworten, die mit IT-Problemen zu tun haben.
+#         Sollte der Benutzer andere Anfragen stellen, die nicht mit dem Kontext zu tun haben, dann antworte nicht.
+#         """
+#
+#         # Jetzt den API-Call vorbereiten
+#         if foto_bytes:
+#             # Bild + Text zusammengeben
+#             # Gemäß docs: types.Part.from_bytes(data, mime_type)
+#             image_part = types.Part.from_bytes(data=foto_bytes, mime_type=mime_type)
+#             contents = [image_part, content_text]
+#         else:
+#             contents = [content_text]
+#
+#         response = client.models.generate_content(
+#             model="gemini-2.5-flash",
+#             contents=contents
+#         )
+#
+#         res = response.text
+#
+#     return render_template("index.html", res=res)
+#
+#
+#
+# if __name__ == "__main__":
+#     app.run(host="0.0.0.0", port=8080, debug=False)
+#
+
 from flask import Flask, render_template, request
+from google import genai
 from google.genai import Client, types
 
 # Initialisiere Client mit API-Key
